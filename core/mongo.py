@@ -54,10 +54,11 @@ class MongoClint:
         collection_name (str): 集合名称。
 
         返回：
-        list: 包含集合中所有文档的列表。
+        data: 连接查询到的数据
         """
         collection = self.db[collection_name]
-        return list(collection.find())
+        data = collection.find()
+        return data
 
     def find_date_of_key(self, collection_name, key):
         """
