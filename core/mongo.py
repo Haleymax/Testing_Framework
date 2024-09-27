@@ -1,5 +1,7 @@
 import pymongo
 
+from test.Mongo import collection
+
 
 class MongoClint:
     def __init__(self):
@@ -19,7 +21,7 @@ class MongoClint:
         if not isinstance(document, dict):
             raise ValueError("document must be a dictionary")
         collection = self.db[collection_name]
-        return collection.insert(document)
+        return collection.insert_one(document)
 
     def find_collection_one(self,collection_name):
         collection = self.db[collection_name]
@@ -28,6 +30,13 @@ class MongoClint:
         collection = self.db[collection_name]
         data = collection.find()
         return data
+
+    def find_value_by_key(self,key):
+        result = collection.find_one({key : {"$exists" : True}})
+        if result :
+            return result.get("key")
+        else:
+            return None
 
     def update_document(self, collection_name, query, update_data):
         if not isinstance(query, dict) or not isinstance(update_data, dict):
