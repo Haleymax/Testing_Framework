@@ -1,6 +1,5 @@
 import pymongo
 
-from test.Mongo import collection
 
 
 class MongoClint:
@@ -32,7 +31,7 @@ class MongoClint:
         return data
 
     def find_value_by_key(self,key):
-        result = collection.find_one({key : {"$exists" : True}})
+        result = self.db.find_one({key : {"$exists" : True}})
         if result :
             return result.get("key")
         else:
