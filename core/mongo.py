@@ -11,7 +11,9 @@ class MongoClint:
     def connect(self, url):
         try:
             self.client = pymongo.MongoClient(url)
+            logger.info(f"Successful established a connection with the mongodb server")
         except pymongo.errors.ConnectionFailure as e:
+            logger.info(f"Failed to establish connection with the mongodb server")
             raise e
 
     def use_database(self, database):
@@ -19,17 +21,22 @@ class MongoClint:
 
     def insert_document(self, collection_name, document):
         if not isinstance(document, dict):
-            logger.info("请传入一个字典进来")
+            logger.info("error in data transfer,need dictionary")
             return None
         collection = self.db[collection_name]
+        logger.info(f"successfully added {document} to {collection_name}")
         return collection.insert_one(document)
 
     def find_collection_one(self,collection_name):
         collection = self.db[collection_name]
+        logger.info("successfully queried a piece of data")
         return collection.find_one()
+
+
     def find_collection(self, collection_name):
         collection = self.db[collection_name]
         data = collection.find()
+        logger.info("successfully queried a dictortion")
         return data
 
     def find_value_by_key(self,key):
