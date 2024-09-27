@@ -7,38 +7,35 @@ from core.mongo import MongoClint
 from core.read_data import ReadFileDate
 
 
-@pytest.fixture(scope="session")
 def get_mongourl():
     logger.info("读取 mogo 连接地址")
     read = ReadFileDate()
     test = read.load_ini(config_file_path)
     mogourl = read.load_properties(config_file_path)["mongourl"]
-    return mogourl
+    return mogourl['mongourl']
 
 
-@pytest.fixture(scope="session")
 def get_database():
     logger.info("读取 database")
     read = ReadFileDate()
-    test = read.load_ini(config_file_path)
+    # test = read.load_ini(config_file_path)
     database = read.load_properties(config_file_path)["database"]
-    return database
+    return database['database']
 
 
-@pytest.fixture(scope="session")
 def get_collection():
     logger.info("读取 collection")
     read = ReadFileDate()
     test = read.load_ini(config_file_path)
     collection = read.load_properties(config_file_path)["collection"]
-    return collection
+    return collection['collection']
 
 
-def get_data(get_mongourl, get_database, get_collection):
+def get_data():
     client = MongoClint()
-    mogourl = get_mongourl
-    database = get_database
-    collection = get_collection
+    mogourl = get_mongourl()
+    database = get_database()
+    collection = get_collection()
     client.connect(mogourl)
     client.use_database(database)
     data = client.find_collection(collection)
@@ -63,4 +60,4 @@ def get_data(get_mongourl, get_database, get_collection):
 
 
 
-webgl_host_data = get_data(get_mongourl, get_database, get_collection)
+webgl_host_data = get_data()

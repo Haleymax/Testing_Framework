@@ -11,3 +11,4 @@ class TestWebGLHost:
         logger.info("***********  开始用例  *****************")
         logger.info(f"devicesid : {devicesid}, packagename : {packagename}, type : {type}, gamename : {gamename}, gamelink{gamelink}")
         assert 1 == 1
+
