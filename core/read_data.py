@@ -26,6 +26,13 @@ class ReadFileDate :
         logger.info("读到数据 ==>>  {} ".format(data))
         return data
 
+    def load_ini(self, file_path):
+        logger.info("加载 {} 文件......".format(file_path))
+        config = MyConfigParser()
+        config.read(file_path, encoding="UTF-8")
+        data = dict(config._sections)
+        print("读到数据 ==>>  {} ".format(data))
+        return data
 
     def load_properties(self , file_path):
         logger.info(f"加载 {file_path} 文件......")
@@ -34,3 +41,7 @@ class ReadFileDate :
         data = dict(config._sections)
         logger.info(f"读到数据 ==>> {data}")
         return data
+
+
+def load_ini(config_file_path):
+    return None
