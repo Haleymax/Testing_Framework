@@ -42,6 +42,3 @@ class ReadFileDate :
         logger.info(f"读到数据 ==>> {data}")
         return data
 
-
-def load_ini(config_file_path):
-    return None
