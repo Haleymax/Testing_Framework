@@ -1,5 +1,6 @@
 import pymongo
 
+from core.logger import logger
 
 
 class MongoClint:
@@ -18,7 +19,8 @@ class MongoClint:
 
     def insert_document(self, collection_name, document):
         if not isinstance(document, dict):
-            raise ValueError("document must be a dictionary")
+            logger.info("请传入一个字典进来")
+            return None
         collection = self.db[collection_name]
         return collection.insert_one(document)
 
