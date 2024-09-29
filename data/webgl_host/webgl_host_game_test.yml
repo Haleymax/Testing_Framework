@@ -1,0 +1,40 @@
+devices:
+  - [ "Y5U0220110000072"]
+  - [ "10AD6S373A0019U"]
+  - [ "h6xwqwkzqsa6onj7"]
+
+
+package_and_type:
+  - [ "com.u3d.webglhost","unity 引擎小游戏","compatibility"]
+
+
+gamelist:
+  - [ "Egret","https://minigamehost.cdn.unity.cn/wxgames/mhbyj", "梦回白玉京" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/xjskp5", "向僵尸开炮" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/xyzw6", "咸鱼之王" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/dtpk2", "地铁跑酷" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/wxdemo", "微信demo" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/zqzs2", "最强祖师" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/ylgy", "羊了个羊" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/xgcz", "消个锤子" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/sjsdzg", "舌尖上的中国" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/bzqb", "爆炸奇兵" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/wsddj", "我是大东家" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/jwdzg", "叫我大掌柜" ]
+  - [ "Laya","https://minigamehost.cdn.unity.cn/wxgames/wmsg", "文明曙光" ]
+  - [ "Laya","https://minigamehost.cdn.unity.cn/wxgames/xnafx", "小鸟爱飞翔" ]
+  - [ "Egret","https://minigamehost.cdn.unity.cn/wxgames/shjysl", "山海经异兽录" ]
+  - [ "Laya","https://minigamehost.cdn.unity.cn/wxgames/wddzz", "豌豆大作战" ]
+  - [ "Cocos","https://minigamehost.cdn.unity.cn/wxgames/wmzb", "无名之辈" ]
+  - [ "Cocos","https://minigamehost.cdn.unity.cn/wxgames/kldlz", "快来当领主" ]
+  - [ "Laya","https://minigamehost.cdn.unity.cn/wxgames/mjccc", "萌将冲冲冲" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/wxdmx3", "武侠大明星" ]
+  - [ "Laya","https://minigamehost.cdn.unity.cn/wxgames/hyqs3d", "荒野求生3d版" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/zqjjdj", "最强机甲对决" ]
+  - [ "laya","https://minigamehost.cdn.unity.cn/wxgames/fkdwy", "疯狂动物园" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/ltzj", "雷霆战机" ]
+  - [ "laya","https://minigamehost.cdn.unity.cn/wxgames/wzycj", "王者要吃鸡" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/hxqzdmm", "火线枪战躲猫猫" ]
+  - [ "unity","https://minigamehost.cdn.unity.cn/wxgames/wjmt", "我叫MT" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/wzsjszb", "我在神界刷装备" ]
+  - [ "cocos","https://minigamehost.cdn.unity.cn/wxgames/nxyk", "逆袭一刻" ]

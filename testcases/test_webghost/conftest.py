@@ -7,6 +7,7 @@ from core.mongo import MongoClint
 from core.read_data import ReadFileDate
 
 
+
 def get_mongourl():
     logger.info("读取 mogo 连接地址")
     read = ReadFileDate()
