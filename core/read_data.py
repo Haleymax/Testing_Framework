@@ -42,3 +42,5 @@ class ReadFileDate :
         logger.info(f"读到数据 ==>> {data}")
         return data
 
+
+read_data = ReadFileDate()
