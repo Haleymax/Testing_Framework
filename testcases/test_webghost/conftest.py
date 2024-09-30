@@ -1,42 +1,27 @@
-import pytest
-
-from core import read_data
-from core.all_path import config_file_path
-from core.logger import logger
 from core.mongo import MongoClint
-from core.read_data import ReadFileDate
+from core.test_info import TestInfo
 
 
-
-def get_mongourl():
-    logger.info("读取 mogo 连接地址")
-    read = ReadFileDate()
-    test = read.load_ini(config_file_path)
-    mogourl = read.load_properties(config_file_path)["mongourl"]
-    return mogourl['mongourl']
-
-
-def get_database():
-    logger.info("读取 database")
-    read = ReadFileDate()
-    # test = read.load_ini(config_file_path)
-    database = read.load_properties(config_file_path)["database"]
-    return database['database']
-
-
-def get_collection():
-    logger.info("读取 collection")
-    read = ReadFileDate()
-    test = read.load_ini(config_file_path)
-    collection = read.load_properties(config_file_path)["collection"]
-    return collection['collection']
-
-
-def get_data():
+def get_test(get_mongourl, get_database, get_devices, get_games):
     client = MongoClint()
-    mogourl = get_mongourl()
-    database = get_database()
-    collection = get_collection()
+    client.connect(get_mongourl)
+    client.use_database(get_database)
+    devices = client.find_collection(get_devices)
+    games = client.find_collection(get_games)
+
+    webgl_host_data = {}
+    for device in devices:
+        infoObject = TestInfo()
+        infoObject.serial = device
+
+
+
+
+def get_data(get_mongourl,get_database,get_collection):
+    client = MongoClint()
+    mogourl = get_database
+    database = get_database
+    collection = get_collection
     client.connect(mogourl)
     client.use_database(database)
     data = client.find_collection(collection)

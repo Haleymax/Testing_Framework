@@ -6,7 +6,6 @@ import pytest
 from core.read_data import read_data
 
 from core.all_path import dataPath
-from testcases.test_webghost.conftest import webgl_host_data
 
 
 class TestInfo :
@@ -28,7 +27,6 @@ class TestInfo :
 
     def creat_dict(self):
         testList = {
-            "serial" : self.serial,
             "packageName" : self.package,
             "type" : self.type,
             "testtype" : self.testtype,
@@ -62,6 +60,10 @@ def get_data(yaml_file_name):
 
 
 def Object_testInfo():
+    """
+    将yaml文件中的数据读取出来创建成测试对象，最后把所有对象放在一个ObjectList列表中
+    :return: 返回一个对象列表
+    """
     data = get_data("webgl_host_game_test.yml")
     ObjectList = []
     devices = data["devices"]
