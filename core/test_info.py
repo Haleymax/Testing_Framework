@@ -1,52 +1,45 @@
 import os
-from math import gamma
-
 import pytest
-
 from core.read_data import read_data
-
 from core.all_path import dataPath
-from testcases.test_webghost.conftest import webgl_host_data
 
 
 class TestInfo :
     def __init__(self):
-        self.serial = ""
         self.package = ""
         self.type = ""
         self.testtype = ""
         self.gamelist =[]
 
-    def setbaseInfo(self , serialID, packageName, type, testtype):
-        self.serial = serialID
-        self.package = packageName
+    def set_base_info(self, serialid, package_name, type, test_type):
+        self.serial = serialid
+        self.package = package_name
         self.type = type
-        self.testtype = testtype
+        self.testtype = test_type
 
-    def setgameList(self , gamelist):
+    def set_game_list(self, gamelist):
         self.gamelist = gamelist
 
     def creat_dict(self):
-        testList = {
-            "serial" : self.serial,
+        testlist = {
             "packageName" : self.package,
             "type" : self.type,
             "testtype" : self.testtype,
             "gamelist" : self.gamelist
         }
-        return testList
+        return testlist
 
     def creat_testlist(self):
         testlist = []
         testinfo = []
-        testlist.append(self.serial)
+        testinfo.append(self.serial)
         testinfo.append(self.package)
         testinfo.append(self.type)
         testinfo.append(self.testtype)
         for game in self.gamelist :
-            lineinfo = testinfo[:]
-            lineinfo.append(game)
-            testlist.append(lineinfo)
+            current = testinfo[:]
+            current.extend(game)
+            testlist.append(current)
         return testlist
 
 
@@ -60,23 +53,6 @@ def get_data(yaml_file_name):
         return yaml_data
 
 
-
-def Object_testInfo():
-    data = get_data("webgl_host_game_test.yml")
-    ObjectList = []
-    devices = data["devices"]
-    baseinfo = data["package_and_type"][0]
-    gameList = data["gamelist"]
-    packageName = baseinfo[0]
-    type = baseinfo[1]
-    testType = baseinfo[2]
-
-    for device in devices :
-        infoObject = TestInfo()
-        infoObject.setbaseInfo(device[0], packageName, type,testType)
-        infoObject.setgameList(gameList)
-        ObjectList.append(infoObject)
-    return ObjectList
 
 
 

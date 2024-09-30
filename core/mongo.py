@@ -1,12 +1,37 @@
 import pymongo
 
+
 from core.logger import logger
 
+class GameList:
+    def __init__(self):
+        self.game_list = []
+
+
+    def set_gamelist(self, games):
+        self.game_list = games
+
+    def compare(self, otherList):
+        """
+        这个方法用于MongoDB中存储的游戏列表和从yaml中读取的游戏列表进行比较
+        :param otherList: yaml文件中读取到的游戏列表
+        :return: 若是一样就返回True ， 存在差异就返回False
+        """
+        if len(self.game_list) != len(otherList) :
+            return False
+        for list1 , list2 in zip(self.game_list, otherList):
+            if len(list1) != len(list2):
+                return False
+            for element1 , element2 in zip(list1, list2):
+                if element1 != element2:
+                    return False
+        return True
 
 class MongoClint:
     def __init__(self):
         self.client = None
         self.db = None
+        self.id = ""
 
     def connect(self, url):
         try:
@@ -15,6 +40,9 @@ class MongoClint:
         except pymongo.errors.ConnectionFailure as e:
             logger.info(f"Failed to establish connection with the mongodb server")
             raise e
+
+    def set_id(self, id):
+        self.id = id
 
     def use_database(self, database):
         self.db = self.client[database]
@@ -64,3 +92,13 @@ class MongoClint:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.client:
             self.client.close()
+
+    def insert_gamelist(self, collection_name , Object):
+        """
+        插入游戏列表
+        :param collection_name:
+        :param Object:
+        :return:
+        """
+        gametest_dict = Object.creat_dict()
+        self.insert_document(collection_name,gametest_dict)
