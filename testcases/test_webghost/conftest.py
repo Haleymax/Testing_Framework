@@ -1,5 +1,5 @@
 from core.mongo import MongoClint
-from core.test_info import TestInfo
+from core.games_info import TestInfo
 
 
 def get_test(get_mongourl, get_database, get_devices, get_games):
