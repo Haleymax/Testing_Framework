@@ -1,104 +1,56 @@
 import pymongo
 
 
+from core.get_data import read_config
 from core.logger import logger
 
-class GameList:
-    def __init__(self):
-        self.game_list = []
+read_config
 
+class Table:
+    """
+    这个Table类并不是指一个mongodb中的集合，而是指这个集合下的一条数据
+    """
+    def __init__(self,id ,data):
+        self.data = data
+        self.id = id
 
-    def set_gamelist(self, games):
-        self.game_list = games
-
-    def compare(self, otherList):
-        """
-        这个方法用于MongoDB中存储的游戏列表和从yaml中读取的游戏列表进行比较
-        :param otherList: yaml文件中读取到的游戏列表
-        :return: 若是一样就返回True ， 存在差异就返回False
-        """
-        if len(self.game_list) != len(otherList) :
-            return False
-        for list1 , list2 in zip(self.game_list, otherList):
-            if len(list1) != len(list2):
-                return False
-            for element1 , element2 in zip(list1, list2):
-                if element1 != element2:
-                    return False
-        return True
+    def get_table(self):
+        return self.data
 
 class MongoClint:
-    def __init__(self):
-        self.client = None
-        self.db = None
-        self.id = ""
-
-    def connect(self, url):
+    def __init__(self, url, database):
         try:
             self.client = pymongo.MongoClient(url)
             logger.info(f"Successful established a connection with the mongodb server")
-        except pymongo.errors.ConnectionFailure as e:
+        except Exception as e:
             logger.info(f"Failed to establish connection with the mongodb server")
             raise e
-
-    def set_id(self, id):
-        self.id = id
-
-    def use_database(self, database):
         self.db = self.client[database]
 
-    def insert_document(self, collection_name, document):
-        if not isinstance(document, dict):
+    def insert_document(self, collection_name, table):
+        if not isinstance(table.data, dict):
             logger.info("error in data transfer,need dictionary")
             return None
         collection = self.db[collection_name]
-        logger.info(f"successfully added {document} to {collection_name}")
-        return collection.insert_one(document)
+        # 根据这个表的id插入数据，若id存在覆盖新的数据进入，若id不存在则直接插入数据
+        try:
+            collection.replace_one({"_id":table.id}, table.data,upsert=True)
+            logger.info(f"successfully inserted {collection_name}")
+        except Exception as e:
+            logger.info(f"Failed to insert {collection_name}")
 
-    def find_collection_one(self,collection_name):
+    def find_collection(self, collection_name, id):
         collection = self.db[collection_name]
-        logger.info("successfully queried a piece of data")
-        return collection.find_one()
-
-
-    def find_collection(self, collection_name):
-        collection = self.db[collection_name]
-        data = collection.find()
+        data = collection.find_one({"_id":id})
         logger.info("successfully queried a dictortion")
         return data
 
-    def find_value_by_key(self,key):
-        result = self.db.find_one({key : {"$exists" : True}})
-        if result :
-            return result.get("key")
-        else:
-            return None
-
-    def update_document(self, collection_name, query, update_data):
-        if not isinstance(query, dict) or not isinstance(update_data, dict):
-            raise ValueError("query and update_data must be dictionaries")
-        collection = self.db[collection_name]
-        return collection.update_one(query, update_data)
-
-    def delete_document(self, collection_name, query):
-        if not isinstance(query, dict):
-            raise ValueError("query must be a dictionary")
-        collection = self.db[collection_name]
-        return collection.delete_one(query)
-
-    def __enter__(self):
-        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.client:
             self.client.close()
 
-    def insert_gamelist(self, collection_name , Object):
-        """
-        插入游戏列表
-        :param collection_name:
-        :param Object:
-        :return:
-        """
-        gametest_dict = Object.creat_dict()
-        self.insert_document(collection_name,gametest_dict)
+
+
+
+
