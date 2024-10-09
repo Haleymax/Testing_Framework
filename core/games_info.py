@@ -100,6 +100,3 @@ def update():
 if __name__ == '__main__':
     update()
 
-
-class TestInfo:
-    pass
