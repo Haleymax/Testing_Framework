@@ -70,6 +70,12 @@ class GamesInfo :
         logger.info("successfully create test gamelist")
         return result
 
+    def get_testcase_by_order(self, start, end):
+        if start > end or start < 0 or end < 0 or end > len(self.gamelist):
+            return None
+        else:
+            result = self.gamelist[start:end]
+            return result
 
 
 def create_gamelist_by_casenum(serial, casenum):

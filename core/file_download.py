@@ -19,7 +19,7 @@ class PipJobInfo:
         self.data = {}
 
     def add_data(self, data):
-        self.data[data["id"]] = data
+        self.data[str(data["id"])] = data
 
     def get_data(self):
         return self.data
@@ -80,9 +80,10 @@ class Getlab_request:
         if data == None:
             data = self.get_pipeinfo_by_gatlab(pipeline_id).data
             self.inser_mongo(pipeline_id)
-            logger.info("successfully get pipline info by gatlab")
         job_ids = []
         for job_id in data.keys():
+            if job_id == "_id":
+                continue
             job_ids.append(job_id)
         return job_ids
 
@@ -102,6 +103,7 @@ class Getlab_request:
                     datas = response.json()
                     for data in datas:
                         pipeinfo.add_data(data)
+                    logger.info("successfully get pipline info by gatlab")
                 except Exception as e:
                     logger.warning(f"Fail to get pipline info")
                 break
