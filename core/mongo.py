@@ -32,12 +32,16 @@ class MongoClint:
             logger.info("error in data transfer,need dictionary")
             return None
         collection = self.db[collection_name]
-        # 根据这个表的id插入数据，若id存在覆盖新的数据进入，若id不存在则直接插入数据
-        try:
-            collection.replace_one({"_id":table.id}, table.data,upsert=True)
-            logger.info(f"successfully inserted {collection_name}")
-        except Exception as e:
-            logger.info(f"Failed to insert {collection_name}")
+
+        if table.data == {}:
+            logger.warning("there is an error in inserting data,please check")
+        else:
+            # 根据这个表的id插入数据，若id存在覆盖新的数据进入，若id不存在则直接插入数据
+            try:
+                collection.replace_one({"_id": table.id}, table.data, upsert=True)
+                logger.info(f"successfully inserted {collection_name}")
+            except Exception as e:
+                logger.info(f"Failed to insert {collection_name}")
 
     def find_collection(self, collection_name, id):
         collection = self.db[collection_name]
