@@ -59,4 +59,39 @@ class ReadConfig:
         properties = read_data.load_properties(config_file_path)["data"]
         return properties["function"]
 
+    def get_spreadsheetToken(self):
+        logger.info("获取飞书表格的token")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["spreadsheetToken"]
+
+    def get_sheetId(self):
+        logger.info("获取表格子表id")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["sheetId"]
+
+    def get_access_token(self):
+        logger.info("获取连接token")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["access_token"]
+
+    def get_start_row(self):
+        logger.info("获取起始点行坐标")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["start_row"]
+
+    def get_start_column(self):
+        logger.info("获取起始点列坐标")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["start_column"]
+
+    def get_total_row(self):
+        logger.info("获取数据的总行数")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["total_row"]
+
+    def get_total_column(self):
+        logger.info("获取数据的总列数")
+        properties = read_data.load_properties(config_file_path)["feishu"]
+        return properties["total_column"]
+
 read_config = ReadConfig()
