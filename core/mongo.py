@@ -1,7 +1,6 @@
 import pymongo
 
 
-from core.get_data import read_config
 from core.logger import logger
 
 class Table:
@@ -50,7 +49,10 @@ class MongoClint:
         return data
 
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        logger.info("disconnect the mongodb server")
+
+    def __del__(self):
         if self.client:
             self.client.close()
+            logger.info("Successfully disconnected from the MongoDB server.")
+        else:
+            logger.info("No active connection to disconnect.")

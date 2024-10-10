@@ -52,7 +52,8 @@ class Feishu_request:
             game.append(data[3])
             game.append(data[4][0]['text'])
             game.append(data[0])
-            games.append(game)
+            for _ in range(8):
+                games.append(game)
         return games
 
     def insert_mongo(self):
@@ -63,14 +64,3 @@ class Feishu_request:
         return insert_data
 
 
-
-def updata_feishu_data_for_mongo():
-    data_of_feishu = Feishu_request(read_config.get_spreadsheetToken(),read_config.get_sheetId(),read_config.get_access_token())
-    data = data_of_feishu.insert_mongo()
-    insert_table = Table(read_config.get_game_table_id(), data)
-    mongo_client = MongoClint(read_config.get_mongourl(), read_config.get_database())
-    mongo_client.insert_document(read_config.get_games_collection(), insert_table)
-
-
-if __name__ == '__main__':
-    updata_feishu_data_for_mongo()
