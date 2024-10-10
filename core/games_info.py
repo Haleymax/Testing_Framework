@@ -4,7 +4,6 @@ from core.get_data import get_data_by_yaml, read_config
 from core.logger import logger
 from core.mongo import Table, MongoClint
 
-read_config
 
 class GamesInfo :
     def __init__(self):
@@ -53,7 +52,7 @@ class GamesInfo :
 
     def create_data_for_mongo(self,serial):
         client = MongoClint(read_config.get_mongourl(), read_config.get_database())
-        data = client.find_collection(read_config.get_collection(), read_config.get_game_table_id())
+        data = client.find_collection(read_config.get_games_collection(), read_config.get_game_table_id())
         self.set_info(serial, data["packageName"], data["type"], data["testtype"], data["gamelist"])
         logger.info("successfully read the mongoDB")
 
@@ -79,6 +78,9 @@ class GamesInfo :
 
 
 def create_gamelist_by_casenum(serial, casenum):
+    """
+    通过终端输入的 casenum 来创建列表，读取数据的方式在配置文件中设置，分别为 yml 和 mongo
+    """
     game_info = GamesInfo()
     if read_config.get_data_function() == "yml":
         game_info.create_data_for_yal(serial)
@@ -91,18 +93,22 @@ def create_gamelist_by_casenum(serial, casenum):
     return game_info.get_testcase_by_num(casenum)
 
 
-def update():
+def update_mangodb_by_yaml():
+    """
+    执行这个函数可以实现更新mongodb，是通过将yaml文件的数据插入到mongo中
+    """
     logger.info("start update mongodb database")
     game_info = GamesInfo()
     game_info.create_data_for_yal("")
     game_info.creat_testcase()
     new_data = game_info.creat_dict()
-    objectData = Table(read_config.get_game_table_id(), new_data)
+    insert_data = Table(read_config.get_game_table_id(), new_data)
     client = MongoClint(read_config.get_mongourl(), read_config.get_database())
-    client.insert_document(read_config.get_database(), read_config.get_collection(), objectData)
+    client.insert_document(read_config.get_games_collection(), insert_data)
 
 
 
 if __name__ == '__main__':
-    update()
+
+    update_mangodb_by_yaml()
 

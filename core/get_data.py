@@ -30,34 +30,38 @@ class ReadConfig:
 
     def get_mongourl(self):
         logger.info("读取 mogo 连接地址")
-        properties = read_data.load_properties(config_file_path)["mongoDB"]
-        return properties['mongourl']
+        config = read_data.load_ini(config_file_path)["mongoDB"]
+        return config['mongourl']
 
     def get_database(self):
         logger.info("读取 database")
-        properties = read_data.load_properties(config_file_path)["mongoDB"]
-        return properties['database']
+        config = read_data.load_ini(config_file_path)["mongoDB"]
+        return config['database']
 
-    def get_collection(self):
+    def get_games_collection(self):
         logger.info("读取 collection")
-        read_data.load_ini(config_file_path)
-        properties = read_data.load_properties(config_file_path)["mongoDB"]
-        return properties["collection"]
+        config = read_data.load_ini(config_file_path)["mongoDB"]
+        return config["games_collection"]
+
+    def get_pipe_collection(self):
+        logger.info("读取 pipe collection")
+        config = read_data.load_ini(config_file_path)["mongoDB"]
+        return config["pipe_collection"]
 
     def get_game_table_id(self):
         logger.info("读取 游戏字段id")
-        properties = read_data.load_properties(config_file_path)["mongoDB"]
-        return properties["games_id"]
+        config = read_data.load_ini(config_file_path)["mongoDB"]
+        return config["games_id"]
 
     def get_device_table_id(self):
         logger.info("读取 设备字段id")
-        properties = read_data.load_properties(config_file_path)["mongoDB"]
-        return properties["device_table_id"]
+        config = read_data.load_ini(config_file_path)["mongoDB"]
+        return config["device_table_id"]
 
     def get_data_function(self):
         logger.info("获取数据库的类型")
-        properties = read_data.load_properties(config_file_path)["data"]
-        return properties["function"]
+        config = read_data.load_ini(config_file_path)["data"]
+        return config["function"]
 
     def get_spreadsheetToken(self):
         logger.info("获取飞书表格的token")
