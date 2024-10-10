@@ -11,9 +11,8 @@ from core.get_data import read_config
 from core.logger import logger
 from core.mongo import Table, MongoClint
 
-read_config
 
-class PipJobInfo:
+class PipeJobInfo:
     def __init__(self, id):
         self.id = id
         self.data = {}
@@ -76,7 +75,7 @@ class Getlab_request:
         通过pipeline_id在mongo中获取信息，如果没有查找到就通过请求gatlab拉取到信息再将这个信息插入到数据库中
         """
         mongo = MongoClint(read_config.get_mongourl(), read_config.get_database())
-        data = mongo.find_collection(read_config.get_pipecollection(),pipeline_id)
+        data = mongo.find_collection(read_config.get_pipe_collection(),pipeline_id)
         if data == None:
             data = self.get_pipeinfo_by_gatlab(pipeline_id).data
             self.inser_mongo(pipeline_id)
@@ -92,7 +91,7 @@ class Getlab_request:
         通过pipeline_id获取到对应的请求数据，数据中对应的就是job的详细信息
         """
         self.set_url_by_pipeline_id(pipeline_id)
-        pipeinfo = PipJobInfo(pipeline_id)
+        pipeinfo = PipeJobInfo(pipeline_id)
         logger.info("execute get pipline info...")
         retries = 4
         delay = 2
@@ -121,7 +120,7 @@ class Getlab_request:
         pipinfo = self.get_pipeinfo_by_gatlab(pipeline_id)
         inser_data = Table(pipinfo.id, pipinfo.data)
         mongo = MongoClint(read_config.get_mongourl(), read_config.get_database())
-        mongo.insert_document(read_config.get_pipecollection(), inser_data)
+        mongo.insert_document(read_config.get_pipe_collection(), inser_data)
 
 def is_exist(dirPath):
     pathExist = os.path.isdir(dirPath)

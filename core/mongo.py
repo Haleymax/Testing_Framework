@@ -4,8 +4,6 @@ import pymongo
 from core.get_data import read_config
 from core.logger import logger
 
-read_config
-
 class Table:
     """
     这个Table类并不是指一个mongodb中的集合，而是指这个集合下的一条数据
@@ -32,7 +30,6 @@ class MongoClint:
             logger.info("error in data transfer,need dictionary")
             return None
         collection = self.db[collection_name]
-
         if table.data == {}:
             logger.warning("there is an error in inserting data,please check")
         else:
@@ -41,20 +38,19 @@ class MongoClint:
                 collection.replace_one({"_id": table.id}, table.data, upsert=True)
                 logger.info(f"successfully inserted {collection_name}")
             except Exception as e:
-                logger.info(f"Failed to insert {collection_name}")
+                logger.info(f"Failed to insert ,becaues {e}")
 
     def find_collection(self, collection_name, id):
         collection = self.db[collection_name]
         data = collection.find_one({"_id":id})
-        logger.info("successfully queried a dictortion")
+        if data:
+            logger.info(f"successfully queried a document from collection '{collection_name}' with id '{id}'.")
+        else:
+            logger.warning(f"Failed to query a document from collection '{collection_name}' with id '{id}'.")
         return data
 
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        logger.info("disconnect the mongodb server")
         if self.client:
             self.client.close()
-
-
-
-
-
